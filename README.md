@@ -1,2 +1,2 @@
 # libwine
-Python library for communication with Wine
+A python library for interacting with Wine.
