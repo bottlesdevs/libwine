@@ -1,5 +1,7 @@
 import glob
 
+from utils.command import Command
+
 class Wine:
     '''
     Create a new object of type Wine with all the methods for its management.
@@ -51,6 +53,25 @@ class Wine:
         TODO: this method should check for ARM wine compatibility on ARM devices
         '''
         pass
+
+    def execute(self, command:str, comunicate:bool=False):
+        '''
+        Execute command inside wineprefix using the wine in winepath
+
+        Parameters
+        ----------
+        command : str
+            command to be executed inside the wineprefix
+        comunicate : bool, optional
+            to get the output of the command (default is False)
+        '''
+        cmd = Command(command=command, cwd=self._wineprefix)
+
+        if comunicate:
+            return cmd.comunicate()
+        
+        return cmd.execute()
+
 
     '''
     Wine Tools

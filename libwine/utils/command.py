@@ -10,6 +10,8 @@ class Command:
         the command to be executed
     cwd: str, optional
         full path to the working directory
+    envs: dict, optional
+        dict of environment variables to pass on the execution
 
     Raises
     ------
@@ -19,12 +21,16 @@ class Command:
 
     _command = str
     _cwd = "/tmp"
+    _envs = {}
 
-    def __init__(self, command:str, cwd:str=None):
+    def __init__(self, command:str, cwd:str=None, envs:dict=None):
         self._command = command
 
         if cwd != None:
             self._cwd = cwd
+
+        if envs != None:
+            self._envs = envs
 
     def execute(self, comunicate:bool=False):
         '''
@@ -42,15 +48,28 @@ class Command:
         str
             the command output if comunicate is set to True
         '''
+        command = self._command
+
+        if len(self._envs) > 0:
+            for e in self._envs:
+                command = f"{e}={self._envs[e]} {command}"
+        print(command)
+        proc = subprocess.Popen(
+            command,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            cwd=self._cwd
+        )
         try:
             proc = subprocess.Popen(
-                self._command,
+                command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
-                cwd=self._cwd
+                cwd=self._cwd,
+                shell=True
             )
         except OSError:
-            raise Exception("Command execution failed.")
+            return False
 
         if comunicate:
             return proc.communicate()[0].decode("utf-8")
@@ -62,3 +81,13 @@ class Command:
         Execute the command and get the output
         '''
         return self.execute(comunicate=True)
+
+'''
+cmd = Command(
+    command="/home/mirko/.local/share/bottles/runners/chardonnay-6.0/bin/wine64 wineboot",
+    envs={
+        "WINEARCH":"win64",
+        "WINEPREFIX": "/home/mirko/test"
+    })
+print(cmd.comunicate())
+'''
