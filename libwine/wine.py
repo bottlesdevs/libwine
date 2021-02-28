@@ -44,6 +44,13 @@ class Wine:
                 return False
 
         return True
+    
+    def check_arch_compatibility(self):
+        '''
+        Check if the given wine arch is compatible with the running system
+        TODO: this method should check for ARM wine compatibility on ARM devices
+        '''
+        pass
 
     '''
     Wine Tools
