@@ -1,4 +1,4 @@
-from typing import Union, NewType
+import glob
 
 class Wine:
     '''
@@ -10,6 +10,11 @@ class Wine:
         full path to Wine
     wineprefix: str
         full path to your wineprefix
+
+    Raises
+    ------
+    ValueError
+        If the given winepath doesn't contains all the essential paths.
     '''
 
     _winepath = str
@@ -18,7 +23,27 @@ class Wine:
     def __init__(self, winepath:str, wineprefix:str):
         self._winepath = winepath
         self._wineprefix = wineprefix
-        pass
+
+        if not self.validate_winepath():
+            raise ValueError("Given winepath doesn't seem a valid Wine path.")
+
+    '''
+    Wine checks
+    '''
+    def validate_winepath(self):
+        '''
+        Check if essential paths exist in winepath.
+        '''
+        promise = ["lib64", "share", "bin", "lib", "include"]
+
+        dirs = glob.glob(f"{self._winepath}/*")
+        dirs = [d.replace(f"{self._winepath}/", "") for d in dirs]
+
+        for p in promise:
+            if p not in dirs:
+                return False
+
+        return True
 
     '''
     Wine Tools
