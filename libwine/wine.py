@@ -12,7 +12,12 @@ class Wine:
         full path to your wineprefix
     '''
 
+    _winepath = str
+    _wineprefix = str
+
     def __init__(self, winepath:str, wineprefix:str):
+        self._winepath = winepath
+        self._wineprefix = wineprefix
         pass
 
     '''
