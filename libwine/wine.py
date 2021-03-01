@@ -155,31 +155,36 @@ class Wine:
         '''
         Launch the taskmgr tool on the active display.
         '''
-        return
+        self.execute(command="taskmgr")
 
     def controlpanel(self):
         '''
         Launch the control tool on the active display.
         '''
-        return
+        self.execute(command="control")
 
     def uninstaller(self):
         '''
         Launch the uninstaller tool on the active display.
         '''
-        return
+        self.execute(command="uninstaller")
 
     def regedit(self):
         '''
         Launch the regedit tool on the active display.
         '''
-        return
+        self.execute(command="regedit")
 
-    def command(self):
+    def command(self, command:str):
         '''
         Execute custom wine commands inside the wineprefix.
+
+        Parameters
+        ----------
+        command : str
+            the command to be executed
         '''
-        return
+        self.execute(command=command)
 
     '''
     Wine uptime management
@@ -269,4 +274,4 @@ wine = Wine(
 )
 # wine.winecfg()
 # wine.debug(terminal="gnome-terminal")
-wine.cmd(terminal="gnome-terminal")
+# wine.cmd(terminal="gnome-terminal")
