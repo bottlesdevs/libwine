@@ -47,19 +47,19 @@ class Command:
             the subprocess object
         str
             the command output if comunicate is set to True
+        bool
+            False if the command fail on execution
+        
+        Raises
+        -------
+        Exception
+            if command not found
         '''
         command = self._command
 
         if len(self._envs) > 0:
             for e in self._envs:
                 command = f"{e}={self._envs[e]} {command}"
-        print(command)
-        proc = subprocess.Popen(
-            command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            cwd=self._cwd
-        )
         try:
             proc = subprocess.Popen(
                 command,
@@ -68,6 +68,8 @@ class Command:
                 cwd=self._cwd,
                 shell=True
             )
+        except FileNotFoundError:
+            raise Exception("Command not found")
         except OSError:
             return False
 
