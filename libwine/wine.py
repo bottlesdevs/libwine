@@ -201,6 +201,11 @@ class Wine:
             1 (restart): Restart only, don't do normal startup operations
             2 (shutdown): Shutdown only, don't reboot
             3 (update): Update the wineprefix directory
+
+        Raises
+        ------
+        Exception
+            If the given state is invalid.
         '''
         states = {
             0: "-k",
