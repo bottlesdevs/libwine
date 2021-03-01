@@ -83,7 +83,6 @@ class Wine:
         if terminal in self._terminals:
             command = self._terminals[terminal] % command
         
-        print(command)
         cmd = Command(
             command=command,
             cwd=self._wineprefix,
