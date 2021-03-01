@@ -225,7 +225,6 @@ class Wine:
         Kill all processes running inside the wineprefix.
         '''
         self.__wineboot(0)
-        return
 
     def restart(self):
         '''
@@ -233,21 +232,18 @@ class Wine:
         don't do normal startup operations.
         '''
         self.__wineboot(1)
-        return
 
     def shutdown(self):
         '''
         Simulate system shutdown for the wineprefix, don't reboot.
         '''
         self.__wineboot(2)
-        return
 
     def update(self):
         '''
         Update the wineprefix directory.
         '''
         self.__wineboot(3)
-        return
     
     '''
     Wine register management
