@@ -1,4 +1,5 @@
 import subprocess
+from os import path
 
 class Command:
     '''
@@ -27,7 +28,9 @@ class Command:
         self._command = command
 
         if cwd != None:
-            self._cwd = cwd
+            if path.exists(cwd):
+                # check if cwd path exists, if not the /tmp path will be used
+                self._cwd = cwd
 
         if envs != None:
             self._envs = envs
