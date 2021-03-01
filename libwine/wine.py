@@ -224,9 +224,11 @@ class Wine:
         '''
         return
 
+'''
 wine = Wine(
     winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
     wineprefix="/home/mirko/test"
 )
 
 wine.winecfg()
+'''
