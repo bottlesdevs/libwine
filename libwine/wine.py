@@ -100,7 +100,7 @@ class Wine:
 
         if terminal in self._terminals:
             command = self._terminals[terminal] % command
-        
+
         cmd = Command(
             command=command,
             cwd=self._wineprefix,
@@ -202,7 +202,17 @@ class Wine:
             2 (shutdown): Shutdown only, don't reboot
             3 (update): Update the wineprefix directory
         '''
-        return
+        states = {
+            0: "-k",
+            1: "-r",
+            2: "-s",
+            3: "-u"
+        }
+        if status in states:
+            status = states[status]
+            self.execute(command=f"wineboot {status}")
+        else:
+            raise Exception(f"[{status}] is not a valid status for wineboot!")
         
         
     def kill(self):
@@ -267,11 +277,12 @@ class Wine:
         '''
         return
 
-''' tests'''
+''' tests
 wine = Wine(
     winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
     wineprefix="/home/mirko/test"
-)
+)'''
 # wine.winecfg()
 # wine.debug(terminal="gnome-terminal")
 # wine.cmd(terminal="gnome-terminal")
+# wine.kill()
