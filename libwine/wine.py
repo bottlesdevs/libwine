@@ -22,6 +22,14 @@ class Wine:
     _winepath = str
     _wineprefix = str
 
+    _terminals = {
+        'xterm': 'xterm -e %s',
+        'konsole': 'konsole -e %s',
+        'gnome-terminal': 'gnome-terminal -- %s',
+        'xfce4-terminal': 'xfce4-terminal --command %s',
+        'mate-terminal': 'mate-terminal --command %s'
+    }
+
     def __init__(self, winepath:str, wineprefix:str):
         self._winepath = winepath
         self._wineprefix = wineprefix
@@ -54,7 +62,7 @@ class Wine:
         '''
         pass
 
-    def execute(self, command:str, comunicate:bool=False, envs:dict={}):
+    def execute(self, command:str, comunicate:bool=False, envs:dict={}, terminal:str=None):
         '''
         Execute command inside wineprefix using the wine in winepath
 
@@ -66,10 +74,16 @@ class Wine:
             to get the output of the command (default is False)
         envs: dict, optional
             dict of environment variables to pass on the execution
+        terminal : str, optional
+            command to an external terminal (default is None)
         '''
         envs["WINEPREFIX"] = self._wineprefix
         command = f"{self._winepath}/bin/wine64 {command}"
+
+        if terminal in self._terminals:
+            command = self._terminals[terminal] % command
         
+        print(command)
         cmd = Command(
             command=command,
             cwd=self._wineprefix,
@@ -89,7 +103,6 @@ class Wine:
         Launch the winecfg tool on the active display.
         '''
         self.execute(command="winecfg")
-        return
 
     def debug(self, terminal:str=None):
         '''
@@ -100,7 +113,11 @@ class Wine:
         terminal : str, optional
             command to an external terminal (default is None)
         '''
-        return
+        
+        self.execute(
+            command="winedbg",
+            terminal=terminal
+        )
 
     def cmd(self, terminal:str=None):
         '''
@@ -224,11 +241,11 @@ class Wine:
         '''
         return
 
-'''
+''' tests
 wine = Wine(
     winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
     wineprefix="/home/mirko/test"
 )
-
-wine.winecfg()
 '''
+# wine.winecfg()
+# wine.debug(terminal="gnome-terminal")
