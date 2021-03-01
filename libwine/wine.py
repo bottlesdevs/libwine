@@ -54,7 +54,7 @@ class Wine:
         '''
         pass
 
-    def execute(self, command:str, comunicate:bool=False):
+    def execute(self, command:str, comunicate:bool=False, envs:dict={}):
         '''
         Execute command inside wineprefix using the wine in winepath
 
@@ -64,14 +64,22 @@ class Wine:
             command to be executed inside the wineprefix
         comunicate : bool, optional
             to get the output of the command (default is False)
+        envs: dict, optional
+            dict of environment variables to pass on the execution
         '''
-        cmd = Command(command=command, cwd=self._wineprefix)
+        envs["WINEPREFIX"] = self._wineprefix
+        command = f"{self._winepath}/bin/wine64 {command}"
+        
+        cmd = Command(
+            command=command,
+            cwd=self._wineprefix,
+            envs=envs
+        )
 
         if comunicate:
             return cmd.comunicate()
         
         return cmd.execute()
-
 
     '''
     Wine Tools
@@ -80,6 +88,7 @@ class Wine:
         '''
         Launch the winecfg tool on the active display.
         '''
+        self.execute(command="winecfg")
         return
 
     def debug(self, terminal:str=None):
@@ -214,3 +223,10 @@ class Wine:
             3 (native/builtin): native then builtin
         '''
         return
+
+wine = Wine(
+    winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
+    wineprefix="/home/mirko/test"
+)
+
+wine.winecfg()
