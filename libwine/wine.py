@@ -12,6 +12,12 @@ class Wine:
         full path to Wine
     wineprefix: str
         full path to your wineprefix
+    verbose: int, optional
+        verbosity status of wine logs (default is 0):
+        0 (silent): -all
+        1 (quite): -warn+all
+        2 (no fixme): fixme-all
+        3 (debug): +all
 
     Raises
     ------
@@ -21,6 +27,7 @@ class Wine:
 
     _winepath = str
     _wineprefix = str
+    _verbose = int
 
     _terminals = {
         'xterm': 'xterm -e %s',
@@ -30,9 +37,19 @@ class Wine:
         'mate-terminal': 'mate-terminal --command %s'
     }
 
-    def __init__(self, winepath:str, wineprefix:str):
+    _verbose_levels = {
+        0: "-all",
+        1: "-warn+all",
+        2: "fixme-all",
+        3: "+all"
+    }
+
+    def __init__(self, winepath:str, wineprefix:str, verbose:int=0):
         self._winepath = winepath
         self._wineprefix = wineprefix
+
+        if verbose in self._verbose_levels:
+            self._verbose = verbose
 
         if not self.validate_winepath():
             raise ValueError("Given winepath doesn't seem a valid Wine path.")
@@ -78,6 +95,7 @@ class Wine:
             command to an external terminal (default is None)
         '''
         envs["WINEPREFIX"] = self._wineprefix
+        envs["WINEDEBUG"] = self._verbose_levels[self._verbose]
         command = f"{self._winepath}/bin/wine64 {command}"
 
         if terminal in self._terminals:
@@ -127,7 +145,11 @@ class Wine:
         terminal : str, optional
             command to an external terminal (default is None)
         '''
-        return
+        
+        self.execute(
+            command="cmd",
+            terminal=terminal
+        )
 
     def taskmanager(self):
         '''
@@ -240,11 +262,11 @@ class Wine:
         '''
         return
 
-''' tests
+''' tests'''
 wine = Wine(
     winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
     wineprefix="/home/mirko/test"
 )
-'''
 # wine.winecfg()
 # wine.debug(terminal="gnome-terminal")
+wine.cmd(terminal="gnome-terminal")
