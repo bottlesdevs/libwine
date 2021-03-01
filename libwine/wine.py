@@ -175,6 +175,9 @@ class Wine:
         '''
         self.execute(command="regedit")
 
+    '''
+    Wine commandd execution
+    '''
     def command(self, command:str):
         '''
         Execute custom wine commands inside the wineprefix.
