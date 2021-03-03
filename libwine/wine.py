@@ -278,17 +278,29 @@ class Wine:
     '''
     Wine register management
     '''
-    def reg_add(self):
+    def reg_add(self, key:str, value:str, data:str):
         '''
         Add (or edit) key to the wineprefix register.
+        key : str
+            the key name
+        value : str
+            the key value
+        data : str
+            the data to store in the key value
         '''
-        return
+        command = f"reg add {key} /v {value} /d {data} /f"
+        self.execute(command=command)
 
-    def reg_delete(self):
+    def reg_delete(self, key:str, value:str):
         '''
         Delete key from the wineprefix register.
+        key : str
+            the key name
+        value : str
+            the key value to be removed
         '''
-        return
+        command = f"reg delete '{key}' /v {value} /f"
+        self.execute(command=command)
     
     '''
     Wine DLL overrides management
