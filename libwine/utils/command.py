@@ -1,6 +1,7 @@
 import subprocess
 from os import path
 
+
 class Command:
     '''
     Create a new object of type Command that can be used to run commands.
@@ -24,7 +25,7 @@ class Command:
     _cwd = "/tmp"
     _envs = {}
 
-    def __init__(self, command:str, cwd:str=None, envs:dict=None):
+    def __init__(self, command: str, cwd: str = None, envs: dict = None):
         self._command = command
 
         if cwd != None:
@@ -35,7 +36,7 @@ class Command:
         if envs != None:
             self._envs = envs
 
-    def execute(self, comunicate:bool=False):
+    def execute(self, comunicate: bool = False):
         '''
         Execute the command.
 
@@ -52,7 +53,7 @@ class Command:
             the command output if comunicate is set to True
         bool
             False if the command fail on execution
-        
+
         Raises
         -------
         Exception
@@ -63,7 +64,7 @@ class Command:
         if len(self._envs) > 0:
             for e in self._envs:
                 command = f"{e}={self._envs[e]} {command}"
-                
+
         try:
             proc = subprocess.Popen(
                 command,
@@ -79,14 +80,15 @@ class Command:
 
         if comunicate:
             return proc.communicate()[0].decode("utf-8")
-        
+
         return proc
-    
+
     def comunicate(self):
         '''
         Execute the command and get the output
         '''
         return self.execute(comunicate=True)
+
 
 '''
 cmd = Command(

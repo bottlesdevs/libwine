@@ -2,6 +2,7 @@ import glob
 
 from utils.command import Command
 
+
 class Wine:
     '''
     Create a new object of type Wine with all the methods for its management.
@@ -44,7 +45,7 @@ class Wine:
         3: "+all"
     }
 
-    def __init__(self, winepath:str, wineprefix:str, verbose:int=0):
+    def __init__(self, winepath: str, wineprefix: str, verbose: int = 0):
         self._winepath = winepath
         self._wineprefix = wineprefix
 
@@ -57,6 +58,7 @@ class Wine:
     '''
     Wine checks
     '''
+
     def validate_winepath(self):
         '''
         Check if essential paths exist in winepath.
@@ -71,7 +73,7 @@ class Wine:
                 return False
 
         return True
-    
+
     def check_arch_compatibility(self):
         '''
         Check if the given wine arch is compatible with the running system
@@ -79,7 +81,7 @@ class Wine:
         '''
         pass
 
-    def execute(self, command:str, comunicate:bool=False, envs:dict={}, terminal:str=None):
+    def execute(self, command: str, comunicate: bool = False, envs: dict = {}, terminal: str = None):
         '''
         Execute command inside wineprefix using the wine in winepath
 
@@ -109,19 +111,20 @@ class Wine:
 
         if comunicate:
             return cmd.comunicate()
-        
+
         return cmd.execute()
 
     '''
     Wine Tools
     '''
+
     def winecfg(self):
         '''
         Launch the winecfg tool on the active display.
         '''
         self.execute(command="winecfg")
 
-    def debug(self, terminal:str=None):
+    def debug(self, terminal: str = None):
         '''
         Launch the winedbg tool.
 
@@ -130,13 +133,13 @@ class Wine:
         terminal : str, optional
             command to an external terminal (default is None)
         '''
-        
+
         self.execute(
             command="winedbg",
             terminal=terminal
         )
 
-    def cmd(self, terminal:str=None):
+    def cmd(self, terminal: str = None):
         '''
         Launch the cmd tool.
 
@@ -145,7 +148,7 @@ class Wine:
         terminal : str, optional
             command to an external terminal (default is None)
         '''
-        
+
         self.execute(
             command="cmd",
             terminal=terminal
@@ -178,7 +181,8 @@ class Wine:
     '''
     Wine commandd execution
     '''
-    def command(self, command:str):
+
+    def command(self, command: str):
         '''
         Execute custom wine commands inside the wineprefix.
 
@@ -189,7 +193,7 @@ class Wine:
         '''
         self.execute(command=command)
 
-    def run_exe(self, executable_path:str):
+    def run_exe(self, executable_path: str):
         '''
         Execute exe files inside the wineprefix.
         executable_path : str
@@ -198,7 +202,7 @@ class Wine:
         command = executable_path
         self.execute(command=command)
 
-    def run_msi(self, msi_path:str):
+    def run_msi(self, msi_path: str):
         '''
         Execute msi files inside the wineprefix.
         msi_path : str
@@ -207,7 +211,7 @@ class Wine:
         command = f"msiexec /i {msi_path}"
         self.execute(command=command)
 
-    def run_bat(self, bat_path:str):
+    def run_bat(self, bat_path: str):
         '''
         Execute bat files inside the wineprefix.
         bat_path : str
@@ -219,7 +223,8 @@ class Wine:
     '''
     Wine uptime management
     '''
-    def __wineboot(self, status:int):
+
+    def __wineboot(self, status: int):
         '''
         Manage Wine server uptime using wineboot
 
@@ -248,8 +253,7 @@ class Wine:
             self.execute(command=f"wineboot {status}")
         else:
             raise Exception(f"[{status}] is not a valid status for wineboot!")
-        
-        
+
     def kill(self):
         '''
         Kill all processes running inside the wineprefix.
@@ -274,11 +278,12 @@ class Wine:
         Update the wineprefix directory.
         '''
         self.__wineboot(3)
-    
+
     '''
     Wine register management
     '''
-    def reg_add(self, key:str, value:str, data:str):
+
+    def reg_add(self, key: str, value: str, data: str):
         '''
         Add (or edit) key to the wineprefix register.
         key : str
@@ -291,7 +296,7 @@ class Wine:
         command = f"reg add {key} /v {value} /d {data} /f"
         self.execute(command=command)
 
-    def reg_delete(self, key:str, value:str):
+    def reg_delete(self, key: str, value: str):
         '''
         Delete key from the wineprefix register.
         key : str
@@ -301,11 +306,12 @@ class Wine:
         '''
         command = f"reg delete '{key}' /v {value} /f"
         self.execute(command=command)
-    
+
     '''
     Wine DLL overrides management
     '''
-    def override_dll(self, type:int):
+
+    def override_dll(self, type: int):
         '''
         Overriding a DLL in the wineprefix.
 
@@ -319,6 +325,7 @@ class Wine:
             3 (native/builtin): native then builtin
         '''
         return
+
 
 ''' tests
 wine = Wine(
