@@ -193,32 +193,32 @@ class Wine:
         '''
         self.execute(command=command)
 
-    def run_exe(self, executable_path: str):
+    def run_exe(self, executable_path: str, envs: dict = {}):
         '''
         Execute exe files inside the wineprefix.
         executable_path : str
             full path to the .exe file
         '''
         command = executable_path
-        self.execute(command=command)
+        self.execute(command=command, envs=envs)
 
-    def run_msi(self, msi_path: str):
+    def run_msi(self, msi_path: str, envs: dict = {}):
         '''
         Execute msi files inside the wineprefix.
         msi_path : str
             full path to the .msi file
         '''
         command = f"msiexec /i {msi_path}"
-        self.execute(command=command)
+        self.execute(command=command, envs=envs)
 
-    def run_bat(self, bat_path: str):
+    def run_bat(self, bat_path: str, envs: dict = {}):
         '''
         Execute bat files inside the wineprefix.
         bat_path : str
             full path to the .bat file
         '''
         command = f"wineconsole cmd /c '{bat_path}'"
-        self.execute(command=command)
+        self.execute(command=command, envs=envs)
 
     '''
     Wine uptime management
