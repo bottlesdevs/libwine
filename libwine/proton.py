@@ -11,6 +11,17 @@ class Proton(Wine):
         full path to Wine
     wineprefix: str
         full path to your wineprefix
+    verbose: int, optional
+        verbosity status of wine logs (default is 0):
+        0 (silent): -all
+        1 (quite): -warn+all
+        2 (no fixme): fixme-all
+        3 (debug): +all
+
+    Raises
+    ------
+    ValueError
+        If the given winepath doesn't contains all the essential paths.
     '''
 
     _winepath = str
