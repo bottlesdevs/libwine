@@ -198,6 +198,8 @@ class Wine:
         Execute exe files inside the wineprefix.
         executable_path : str
             full path to the .exe file
+        envs: dict, optional
+            dict of environment variables to pass on the execution
         '''
         command = executable_path
         self.execute(command=command, envs=envs)
@@ -207,6 +209,8 @@ class Wine:
         Execute msi files inside the wineprefix.
         msi_path : str
             full path to the .msi file
+        envs: dict, optional
+            dict of environment variables to pass on the execution
         '''
         command = f"msiexec /i {msi_path}"
         self.execute(command=command, envs=envs)
@@ -216,6 +220,8 @@ class Wine:
         Execute bat files inside the wineprefix.
         bat_path : str
             full path to the .bat file
+        envs: dict, optional
+            dict of environment variables to pass on the execution
         '''
         command = f"wineconsole cmd /c '{bat_path}'"
         self.execute(command=command, envs=envs)
@@ -224,7 +230,7 @@ class Wine:
     Wine uptime management
     '''
 
-    def __wineboot(self, status: int):
+    def __wineboot(self, status: int, silent: bool = True):
         '''
         Manage Wine server uptime using wineboot
 
@@ -236,6 +242,8 @@ class Wine:
             1 (restart): Restart only, don't do normal startup operations
             2 (shutdown): Shutdown only, don't reboot
             3 (update): Update the wineprefix directory
+        silent: bool, optional
+            if the command should not display on display (default True)
 
         Raises
         ------
@@ -248,9 +256,14 @@ class Wine:
             2: "-s",
             3: "-u"
         }
+        envs = {}
+        
+        if silent:
+            envs["DISPLAY"] = ":0.0"
+
         if status in states:
             status = states[status]
-            self.execute(command=f"wineboot {status}")
+            self.execute(command=f"wineboot {status}", envs=envs)
         else:
             raise Exception(f"[{status}] is not a valid status for wineboot!")
 
