@@ -5,14 +5,100 @@ A python library for interacting with Wine.
 ```python
 from libwine.wine import Wine
 
-wine = Wine(
+my_wineprefix = Wine(
     winepath="/path/to/wine", # folder
     wineprefix="/path/to/wineprefix", # empty or existing
     verbose=3 # +all
 )
 
-wine.update()
-wine.winecfg()
-wine.cmd(terminal="gnome-terminal")
-wine.kill()
+'''
+Update the wineprefix directory.
+'''
+my_wineprefix.update()
+
+'''
+Simulate system restart for the wineprefix,
+don't do normal startup operations.
+'''
+my_wineprefix.restart()
+
+'''
+Kill all processes running inside the wineprefix.
+'''
+my_wineprefix.kill()
+
+'''
+Simulate system shutdown for the wineprefix, don't reboot.
+'''
+my_wineprefix.shutdown()
+
+'''
+Launch the winecfg tool on the active display.
+'''
+my_wineprefix.winecfg()
+
+'''
+Launch the cmd tool.
+'''
+my_wineprefix.cmd()
+my_wineprefix.cmd(terminal="gnome-terminal") # on external terminal
+
+'''
+Launch the taskmgr tool on the active display.
+'''
+my_wineprefix.taskmanager()
+
+'''
+Launch the control tool on the active display.
+'''
+my_wineprefix.controlpanel()
+
+'''
+Launch the uninstaller tool on the active display.
+'''
+my_wineprefix.uninstaller()
+
+'''
+Launch the regedit tool on the active display.
+'''
+my_wineprefix.regedit()
+
+'''
+Execute custom wine commands inside the wineprefix.
+'''
+my_wineprefix.command("DIR)
+
+'''
+Execute exe/msi/bat files inside the wineprefix.
+'''
+my_wineprefix.run_exe("path/to/file.exe")
+my_wineprefix.run_msi("ath/to/file.msi")
+my_wineprefix.run_bat("ath/to/file.bat")
+
+'''
+Add (or erdit) key to the wineprefix register.
+'''
+my_wineprefix.reg_add(
+    key="HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
+    value="Default",
+    data="1920x1080"
+)
+
+'''
+Delete key from the wineprefix register.
+'''
+my_wineprefix.reg_delete(
+    key="HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
+    value="Default"
+)
+
+'''
+Overriding a DLL in the wineprefix.
+Note: not implemented
+'''
+my_wineprefix.override_dll(
+    name="ucrtbase",
+    type=2 # builtin/native
+)
+
 ```
