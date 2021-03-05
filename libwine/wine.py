@@ -271,26 +271,26 @@ class Wine:
         '''
         Kill all processes running inside the wineprefix.
         '''
-        self.__wineboot(0)
+        self.__wineboot(status=0)
 
     def restart(self):
         '''
         Simulate system restart for the wineprefix,
         don't do normal startup operations.
         '''
-        self.__wineboot(1)
+        self.__wineboot(status=1)
 
     def shutdown(self):
         '''
         Simulate system shutdown for the wineprefix, don't reboot.
         '''
-        self.__wineboot(2)
+        self.__wineboot(status=2)
 
     def update(self):
         '''
         Update the wineprefix directory.
         '''
-        self.__wineboot(3)
+        self.__wineboot(status=3, silent=True)
 
     '''
     Wine register management
@@ -324,12 +324,14 @@ class Wine:
     Wine DLL overrides management
     '''
 
-    def override_dll(self, type: int):
+    def override_dll(self, name: str, type: int):
         '''
         Overriding a DLL in the wineprefix.
 
         Parameters
         ----------
+        name : str
+            the name of the DLL
         type : int
             the type of override:
             0 (builtin): provided by Wine
