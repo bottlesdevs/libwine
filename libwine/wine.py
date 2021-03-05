@@ -338,14 +338,3 @@ class Wine:
             3 (native/builtin): native then builtin
         '''
         return
-
-
-''' tests
-wine = Wine(
-    winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
-    wineprefix="/home/mirko/test"
-)'''
-# wine.winecfg()
-# wine.debug(terminal="gnome-terminal")
-# wine.cmd(terminal="gnome-terminal")
-# wine.kill()
