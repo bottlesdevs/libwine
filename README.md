@@ -3,7 +3,7 @@ A python library for interacting with Wine.
 
 ## Usage
 ```python
-from libwine import wine
+from libwine.wine import Wine
 
 wine = Wine(
     winepath="/path/to/wine", # folder
