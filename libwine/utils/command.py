@@ -67,6 +67,7 @@ class Command:
         if len(self._envs) > 0:
             for e in self._envs:
                 command = f"{e}={self._envs[e]} {command}"
+                
         try:
             proc = subprocess.Popen(
                 command,

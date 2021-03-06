@@ -306,7 +306,7 @@ class Wine:
         data : str
             the data to store in the key value
         '''
-        command = f"reg add {key} /v {value} /d {data} /f"
+        command = f"reg add '{key}' /v '{value}' /d '{data}' /f"
         self.execute(command=command)
 
     def reg_delete(self, key: str, value: str):
@@ -319,6 +319,45 @@ class Wine:
         '''
         command = f"reg delete '{key}' /v {value} /f"
         self.execute(command=command)
+    
+    '''
+    Simplified Wine register keys
+    '''
+
+    def set_windows(self, version: str):
+        '''
+        Change Windows version of the wineprefix
+
+        Parameters
+        ----------
+        version : str
+            the complete name of the Windows version
+
+        Raises
+        ------
+        ValueError
+            If the given version is invalid.
+        '''
+        versions = [ # TODO: other keys should be replaced
+            "Microsoft Windows 10",
+            "Microsoft Windows 8.1",
+            "Microsoft Windows 8",
+            "Microsoft Windows 2008 R2",
+            "Microsoft Windows 7",
+            "Microsoft Windows 2008",
+            "Microsoft Windows Vista",
+            "Microsoft Windows 2003",
+            "Microsoft Windows XP"
+        ]
+
+        if version not in versions:
+            raise ValueError("Given version is not supported.")
+
+        self.reg_add(
+            key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
+            value="ProductName",
+            data=version
+        )
 
     '''
     Wine DLL overrides management
