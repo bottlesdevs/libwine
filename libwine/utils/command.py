@@ -1,5 +1,5 @@
 import subprocess
-from os import path
+from os import path, mkdir
 
 
 class Command:
@@ -29,9 +29,12 @@ class Command:
         self._command = command
 
         if cwd != None:
-            if path.exists(cwd):
-                # check if cwd path exists, if not the /tmp path will be used
-                self._cwd = cwd
+            if not path.exists(cwd):
+                try:
+                    mkdir(cwd)
+                    self._cwd = cwd
+                except PermissionError: # the /tmp path will be used
+                    pass
 
         if envs != None:
             self._envs = envs
@@ -64,7 +67,6 @@ class Command:
         if len(self._envs) > 0:
             for e in self._envs:
                 command = f"{e}={self._envs[e]} {command}"
-
         try:
             proc = subprocess.Popen(
                 command,
