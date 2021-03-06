@@ -331,24 +331,71 @@ class Wine:
         Parameters
         ----------
         version : str
-            the complete name of the Windows version
+            the Windows version to be setted:
+            win10 (Microsoft Windows 10)
+            win81 (Microsoft Windows 8.1)
+            win8 (Microsoft Windows 8)
+            win7 (Microsoft Windows 7)
+            win2008r2 (Microsoft Windows 2008 R1)
+            win2008 (Microsoft Windows 2008)
+            winxp (Microsoft Windows XP)
 
         Raises
         ------
         ValueError
             If the given version is invalid.
         '''
-        versions = [ # TODO: other keys should be replaced
-            "Microsoft Windows 10",
-            "Microsoft Windows 8.1",
-            "Microsoft Windows 8",
-            "Microsoft Windows 2008 R2",
-            "Microsoft Windows 7",
-            "Microsoft Windows 2008",
-            "Microsoft Windows Vista",
-            "Microsoft Windows 2003",
-            "Microsoft Windows XP"
-        ]
+        versions = {
+            "win10": {
+                "ProductName": "Microsoft Windows 10",
+                "CSDVersion": "",
+                "CurrentBuild": "17763",
+                "CurrentBuildNumber": "17763",
+                "CurrentVersion": "10.0",
+            },
+            "win81": {
+                "ProductName": "Microsoft Windows 8.1",
+                "CSDVersion": "",
+                "CurrentBuild": "9600",
+                "CurrentBuildNumber": "9600",
+                "CurrentVersion": "6.3",
+            },
+            "win8": {
+                "ProductName": "Microsoft Windows 8",
+                "CSDVersion": "",
+                "CurrentBuild": "9200",
+                "CurrentBuildNumber": "9200",
+                "CurrentVersion": "6.2",
+            },
+            "win7": {
+                "ProductName": "Microsoft Windows 7",
+                "CSDVersion": "Service Pack 1",
+                "CurrentBuild": "7601",
+                "CurrentBuildNumber": "7601",
+                "CurrentVersion": "6.1",
+            },
+            "win2008r2": {
+                "ProductName": "Microsoft Windows 2008 R2",
+                "CSDVersion": "Service Pack 1",
+                "CurrentBuild": "7601",
+                "CurrentBuildNumber": "7601",
+                "CurrentVersion": "6.1",
+            },
+            "win2008": {
+                "ProductName": "Microsoft Windows 2008",
+                "CSDVersion": "Service Pack 2",
+                "CurrentBuild": "6002",
+                "CurrentBuildNumber": "6002",
+                "CurrentVersion": "6.0",
+            },
+            "winxp": {
+                "ProductName": "Microsoft Windows XP",
+                "CSDVersion": "Service Pack 2",
+                "CurrentBuild": "3790",
+                "CurrentBuildNumber": "3790",
+                "CurrentVersion": "5.2",
+            },
+        }
 
         if version not in versions:
             raise ValueError("Given version is not supported.")
@@ -356,7 +403,31 @@ class Wine:
         self.reg_add(
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="ProductName",
-            data=version
+            data=versions.get(version)["ProductName"]
+        )
+
+        self.reg_add(
+            key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
+            value="CSDVersion",
+            data=versions.get(version)["CSDVersion"]
+        )
+
+        self.reg_add(
+            key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
+            value="CurrentBuild",
+            data=versions.get(version)["CurrentBuild"]
+        )
+
+        self.reg_add(
+            key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
+            value="CurrentBuildNumber",
+            data=versions.get(version)["CurrentBuildNumber"]
+        )
+
+        self.reg_add(
+            key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
+            value="CurrentVersion",
+            data=versions.get(version)["CurrentVersion"]
         )
 
     '''
