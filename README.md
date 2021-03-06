@@ -93,6 +93,11 @@ my_wineprefix.reg_delete(
 )
 
 '''
+Change Windows version
+'''
+my_wineprefix.set_windows("win10")
+
+'''
 Overriding a DLL in the wineprefix.
 Note: not implemented
 '''
