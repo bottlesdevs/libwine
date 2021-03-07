@@ -44,6 +44,57 @@ class Wine:
         2: "fixme-all",
         3: "+all"
     }
+    _windows_versions = {
+        "win10": {
+            "ProductName": "Microsoft Windows 10",
+            "CSDVersion": "",
+            "CurrentBuild": "17763",
+            "CurrentBuildNumber": "17763",
+            "CurrentVersion": "10.0",
+        },
+        "win81": {
+            "ProductName": "Microsoft Windows 8.1",
+            "CSDVersion": "",
+            "CurrentBuild": "9600",
+            "CurrentBuildNumber": "9600",
+            "CurrentVersion": "6.3",
+        },
+        "win8": {
+            "ProductName": "Microsoft Windows 8",
+            "CSDVersion": "",
+            "CurrentBuild": "9200",
+            "CurrentBuildNumber": "9200",
+            "CurrentVersion": "6.2",
+        },
+        "win7": {
+            "ProductName": "Microsoft Windows 7",
+            "CSDVersion": "Service Pack 1",
+            "CurrentBuild": "7601",
+            "CurrentBuildNumber": "7601",
+            "CurrentVersion": "6.1",
+        },
+        "win2008r2": {
+            "ProductName": "Microsoft Windows 2008 R2",
+            "CSDVersion": "Service Pack 1",
+            "CurrentBuild": "7601",
+            "CurrentBuildNumber": "7601",
+            "CurrentVersion": "6.1",
+        },
+        "win2008": {
+            "ProductName": "Microsoft Windows 2008",
+            "CSDVersion": "Service Pack 2",
+            "CurrentBuild": "6002",
+            "CurrentBuildNumber": "6002",
+            "CurrentVersion": "6.0",
+        },
+        "winxp": {
+            "ProductName": "Microsoft Windows XP",
+            "CSDVersion": "Service Pack 2",
+            "CurrentBuild": "3790",
+            "CurrentBuildNumber": "3790",
+            "CurrentVersion": "5.2",
+        },
+    }
 
     def __init__(self, winepath: str, wineprefix: str, verbose: int = 0):
         self._winepath = winepath
@@ -345,89 +396,38 @@ class Wine:
         ValueError
             If the given version is invalid.
         '''
-        versions = {
-            "win10": {
-                "ProductName": "Microsoft Windows 10",
-                "CSDVersion": "",
-                "CurrentBuild": "17763",
-                "CurrentBuildNumber": "17763",
-                "CurrentVersion": "10.0",
-            },
-            "win81": {
-                "ProductName": "Microsoft Windows 8.1",
-                "CSDVersion": "",
-                "CurrentBuild": "9600",
-                "CurrentBuildNumber": "9600",
-                "CurrentVersion": "6.3",
-            },
-            "win8": {
-                "ProductName": "Microsoft Windows 8",
-                "CSDVersion": "",
-                "CurrentBuild": "9200",
-                "CurrentBuildNumber": "9200",
-                "CurrentVersion": "6.2",
-            },
-            "win7": {
-                "ProductName": "Microsoft Windows 7",
-                "CSDVersion": "Service Pack 1",
-                "CurrentBuild": "7601",
-                "CurrentBuildNumber": "7601",
-                "CurrentVersion": "6.1",
-            },
-            "win2008r2": {
-                "ProductName": "Microsoft Windows 2008 R2",
-                "CSDVersion": "Service Pack 1",
-                "CurrentBuild": "7601",
-                "CurrentBuildNumber": "7601",
-                "CurrentVersion": "6.1",
-            },
-            "win2008": {
-                "ProductName": "Microsoft Windows 2008",
-                "CSDVersion": "Service Pack 2",
-                "CurrentBuild": "6002",
-                "CurrentBuildNumber": "6002",
-                "CurrentVersion": "6.0",
-            },
-            "winxp": {
-                "ProductName": "Microsoft Windows XP",
-                "CSDVersion": "Service Pack 2",
-                "CurrentBuild": "3790",
-                "CurrentBuildNumber": "3790",
-                "CurrentVersion": "5.2",
-            },
-        }
 
-        if version not in versions:
+        if version not in self._windows_versions:
             raise ValueError("Given version is not supported.")
 
         self.reg_add(
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="ProductName",
-            data=versions.get(version)["ProductName"]
+            data=self._windows_versions.get(version)["ProductName"]
         )
 
         self.reg_add(
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="CSDVersion",
-            data=versions.get(version)["CSDVersion"]
+            data=self._windows_versions.get(version)["CSDVersion"]
         )
 
         self.reg_add(
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="CurrentBuild",
-            data=versions.get(version)["CurrentBuild"]
+            data=self._windows_versions.get(version)["CurrentBuild"]
         )
 
         self.reg_add(
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="CurrentBuildNumber",
-            data=versions.get(version)["CurrentBuildNumber"]
+            data=self._windows_versions.get(version)["CurrentBuildNumber"]
         )
 
         self.reg_add(
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="CurrentVersion",
-            data=versions.get(version)["CurrentVersion"]
+            data=self._windows_versions.get(version)["CurrentVersion"]
         )
 
     def set_virtual_desktop(self, status: bool, res: str = None):
@@ -478,3 +478,4 @@ class Wine:
             3 (native/builtin): native then builtin
         '''
         return
+
