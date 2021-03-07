@@ -430,6 +430,34 @@ class Wine:
             data=versions.get(version)["CurrentVersion"]
         )
 
+    def set_virtual_desktop(self, status: bool, res: str = None):
+        '''
+        Enable or disable the Wine Virtual Desktop
+
+        Parameters
+        ----------
+        status : bool
+            the Virtual Desktop status
+        res : str (optional)
+            the resolution to be used (e.g. 800x600) only if status is True
+        '''
+        if status:
+            self.reg_add(
+                key="HKEY_CURRENT_USER\\Software\\Wine\\Explorer",
+                value="Desktop",
+                data="Default"
+            )
+            self.reg_add(
+                key="HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
+                value="Default",
+                data=res
+            )
+        else:
+            self.reg_delete(
+                key="HKEY_CURRENT_USER\\Software\\Wine\\Explorer",
+                value="Desktop"
+            )
+
     '''
     Wine DLL overrides management
     '''
