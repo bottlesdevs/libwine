@@ -317,7 +317,7 @@ class Wine:
         value : str
             the key value to be removed
         '''
-        command = f"reg delete '{key}' /v {value} /f"
+        command = f"reg delete '{key}' /v '{value}' /f"
         self.execute(command=command)
     
     '''
