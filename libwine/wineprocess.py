@@ -68,11 +68,11 @@ class WineProcess:
 
         Return
         ----------
-        int:
-            a valid process ID as integer
+        str:
+            a valid process ID as hex
         '''
         if pid != None:
-            return int(f"0x{pid}", 16)
+            return f"0x{pid}"
 
     def _cpu_usage(self, cpu: str):
         '''
@@ -116,16 +116,13 @@ class WineProcess:
         '''
         Kill the process.
         '''
-        # TODO:
-        # run winedbg
-        # attach self.pid (converted from hexadecimal to decimal)
-        # kill
-        # quit
-        # e.g. wine.execute(..)
         if self.name not in self._protected:
-            self.wine(
-                command="",
-            )
+            command = f"winedbg << END_OF_INPUTS\n\
+                attach {self.pid}\n\
+                kill\n\
+                quit\n\
+                END_OF_INPUTS"
+            self.wine.execute(command=command, comunicate=True)
         else:
             raise Exception("Cannot kill protected process.")
 

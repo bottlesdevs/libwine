@@ -371,7 +371,7 @@ class Wine:
         winedbg = self.execute(
             command='winedbg --command "info proc"',
             comunicate=True).split("\n")
-        
+
         # remove the first line from the output (the header)
         del winedbg[0]
 
@@ -384,12 +384,12 @@ class Wine:
 
             w = w.split(" ")
             w_parent = None
-            
+
             if len(w) >= 3 and w[1].isdigit():
                 w_pid = w[0]
                 w_threads = w[1]
                 w_name = w[2]
-                
+
                 if len(w) == 3:
                     parent = w_pid
                 else:
@@ -402,8 +402,6 @@ class Wine:
                     wine=self
                 )
                 processes.append(w)
-
-        print([p.pid for p in processes])
 
         return processes
 
@@ -564,4 +562,3 @@ class Wine:
                 key="HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
                 value=name
             )
-
