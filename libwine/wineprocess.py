@@ -1,6 +1,8 @@
 from typing import NewType
 
 Wine = NewType('Wine', object)
+
+
 class WineProcess:
     '''
     Create a new object of type WineProcess with all the methods for its management.
@@ -11,11 +13,13 @@ class WineProcess:
         the process id
     name: str
         the process name (command)
-    cpu: str
+    parent_pid: str (optional)
+        the parent process id
+    cpu: str (not implemented)
         the cpu used by the process
-    memory: str
+    memory: str (not implemented)
         the memory used by the process
-    start: str
+    start: str (not implemented)
         the process start date/time
     wine: Wine
         the Wine object
@@ -23,17 +27,30 @@ class WineProcess:
 
     pid = int
     name = str
-    cpu = int
-    memory = int
-    start = str
+    parent_pid = str
+    # cpu = int
+    # memory = int
+    # start = str
     wine = Wine
 
-    def __init__(self, pid: str, name: str, cpu: str, memory: str, start: str, wine: Wine):
+    _protected = [
+        "explorer.exe",
+        "services.exe",
+        "rpcss.exe",
+        "svchost.exe",
+        "winedevice.exe",
+        "plugplay.exe"
+        "winedbg.exe",
+        "conhost.exe"
+    ]
+
+    def __init__(self, pid: str, name: str, wine: Wine, parent_pid: str = None):
         self.pid = self._pid(pid)
         self.name = name
-        self.cpu = self._cpu_usage(cpu)
-        self.memory = self._memory_usage(memory)
-        self.start = start
+        self.parent_pid = self._pid(parent_pid)
+        # self.cpu = self._cpu_usage(cpu)
+        # self.memory = self._memory_usage(memory)
+        # self.start = start
         self.wine = wine
 
     '''
@@ -54,7 +71,8 @@ class WineProcess:
         int:
             a valid process ID as integer
         '''
-        return int(pid)
+        if pid != None:
+            return int(f"0x{pid}", 16)
 
     def _cpu_usage(self, cpu: str):
         '''
@@ -104,7 +122,12 @@ class WineProcess:
         # kill
         # quit
         # e.g. wine.execute(..)
-        return
+        if self.name not in self._protected:
+            self.wine(
+                command="",
+            )
+        else:
+            raise Exception("Cannot kill protected process.")
 
     def update(self):
         '''

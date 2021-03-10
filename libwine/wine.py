@@ -1,7 +1,9 @@
 import glob
+import re
 
 from utils.command import Command
 from wineprocess import WineProcess
+
 
 class Wine:
     '''
@@ -364,10 +366,45 @@ class Wine:
             A list of WineProcess.
         '''
         processes = []
-        '''
-        for p in self.execute('winedbg --command "info proc"'):
-            processes.append(WineProcess(.....))
-        '''
+        parent = None
+
+        winedbg = self.execute(
+            command='winedbg --command "info proc"',
+            comunicate=True).split("\n")
+        
+        # remove the first line from the output (the header)
+        del winedbg[0]
+
+        for w in winedbg:
+            w = re.sub("\s{2,}", " ", w)[1:].replace("'", "")
+
+            if "\_" in w:
+                w = w.replace("\_ ", "")
+                w += " child"
+
+            w = w.split(" ")
+            w_parent = None
+            
+            if len(w) >= 3 and w[1].isdigit():
+                w_pid = w[0]
+                w_threads = w[1]
+                w_name = w[2]
+                
+                if len(w) == 3:
+                    parent = w_pid
+                else:
+                    w_parent = parent
+
+                w = WineProcess(
+                    pid=w_pid,
+                    name=w_name,
+                    parent_pid=w_parent,
+                    wine=self
+                )
+                processes.append(w)
+
+        print([p.pid for p in processes])
+
         return processes
 
     '''
