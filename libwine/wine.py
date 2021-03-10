@@ -96,6 +96,13 @@ class Wine:
         },
     }
 
+    _dll_overrides = {
+        0: "builtin",
+        1: "native",
+        2: "builtin,native",
+        3: "native,builtin"
+    }
+
     def __init__(self, winepath: str, wineprefix: str, verbose: int = 0):
         self._winepath = winepath
         self._wineprefix = wineprefix
@@ -308,7 +315,7 @@ class Wine:
             3: "-u"
         }
         envs = {}
-        
+
         if silent:
             envs["DISPLAY"] = ":0.0"
 
@@ -370,7 +377,7 @@ class Wine:
         '''
         command = f"reg delete '{key}' /v '{value}' /f"
         self.execute(command=command)
-    
+
     '''
     Simplified Wine register keys
     '''
@@ -462,7 +469,7 @@ class Wine:
     Wine DLL overrides management
     '''
 
-    def override_dll(self, name: str, type: int):
+    def override_dll(self, name: str, override: int = 0, restore: bool = False):
         '''
         Overriding a DLL in the wineprefix.
 
@@ -470,12 +477,27 @@ class Wine:
         ----------
         name : str
             the name of the DLL
-        type : int
-            the type of override:
+        override : int
+            the type of override (default 0:builtin):
             0 (builtin): provided by Wine
             1 (native): provided by Windows
             2 (builtin/native): builtin then native
             3 (native/builtin): native then builtin
+        restore : bool (optional)
+            restore the override to the initiale state (default False)
         '''
-        return
 
+        if override not in self._dll_overrides:
+            raise ValueError("Given override type is not supported.")
+
+        if not restore:
+            self.reg_add(
+                key="HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+                value=name,
+                data=self._dll_overrides.get(override)
+            )
+        else:
+            self.reg_delete(
+                key="HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+                value=name
+            )
