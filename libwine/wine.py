@@ -351,12 +351,31 @@ class Wine:
         self.__wineboot(status=3, silent=True)
 
     '''
+    Wine process management
+    '''
+
+    def processes(self):
+        '''
+        Get processes running on the wineprefix.
+
+        Return
+        ------
+        list:
+            A list of WineProcess.
+        '''
+        processes = []
+        return
+
+    '''
     Wine register management
     '''
 
     def reg_add(self, key: str, value: str, data: str):
         '''
         Add (or edit) key to the wineprefix register.
+
+        Parameters
+        ----------
         key : str
             the key name
         value : str
@@ -370,6 +389,9 @@ class Wine:
     def reg_delete(self, key: str, value: str):
         '''
         Delete key from the wineprefix register.
+
+        Parameters
+        ----------
         key : str
             the key name
         value : str
@@ -501,3 +523,16 @@ class Wine:
                 key="HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
                 value=name
             )
+
+
+my_wineprefix = Wine(
+    winepath="/home/mirko/.local/share/bottles/runners/chardonnay-6.0",
+    wineprefix="/home/mirko/Documents/Test",
+    verbose=0
+)
+
+my_wineprefix.override_dll(
+    name="appwiz.cpl",
+    restore=True
+)
+my_wineprefix.winecfg()
