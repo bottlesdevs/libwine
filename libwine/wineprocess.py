@@ -1,3 +1,6 @@
+from typing import NewType
+
+Wine = NewType('Wine', object)
 class WineProcess:
     '''
     Create a new object of type WineProcess with all the methods for its management.
@@ -14,8 +17,8 @@ class WineProcess:
         the memory used by the process
     start: str
         the process start date/time
-    wineprefix: str
-        the full path of the wineprefix where the process is running
+    wine: Wine
+        the Wine object
     '''
 
     pid = int
@@ -23,15 +26,15 @@ class WineProcess:
     cpu = int
     memory = int
     start = str
-    wineprefix = str
+    wine = Wine
 
-    def __init__(self, pid: str, name: str, cpu: str, memory: str, start: str, wineprefix: str):
+    def __init__(self, pid: str, name: str, cpu: str, memory: str, start: str, wine: Wine):
         self.pid = self._pid(pid)
         self.name = name
         self.cpu = self._cpu_usage(cpu)
         self.memory = self._memory_usage(memory)
         self.start = start
-        self.wineprefix = wineprefix
+        self.wine = wine
 
     '''
     Data check and assignment
@@ -95,7 +98,12 @@ class WineProcess:
         '''
         Kill the process.
         '''
-        # TODO: kill process by pid
+        # TODO:
+        # run winedbg
+        # attach self.pid (converted from hexadecimal to decimal)
+        # kill
+        # quit
+        # e.g. wine.execute(..)
         return
 
     def update(self):

@@ -1,7 +1,7 @@
 import glob
 
 from utils.command import Command
-
+from wineprocess import WineProcess
 
 class Wine:
     '''
@@ -364,7 +364,11 @@ class Wine:
             A list of WineProcess.
         '''
         processes = []
-        return
+        '''
+        for p in self.execute('winedbg --command "info proc"'):
+            processes.append(WineProcess(.....))
+        '''
+        return processes
 
     '''
     Wine register management
@@ -523,3 +527,4 @@ class Wine:
                 key="HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
                 value=name
             )
+
