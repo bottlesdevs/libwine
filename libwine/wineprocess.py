@@ -89,11 +89,6 @@ class WineProcess:
         '''
         Get the wineprefix where the process is running.
 
-        Parameters
-        ----------
-        memory : str
-            the memory percentage used by the process as string
-
         Return
         ----------
         str:
