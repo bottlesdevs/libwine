@@ -98,12 +98,24 @@ Change Windows version
 my_wineprefix.set_windows("win10")
 
 '''
+Manage Virtual Desktop
+'''
+my_wineprefix.set_virtual_desktop(
+    status=True,
+    res="800x600"
+)
+my_wineprefix.set_virtual_desktop(status=False)
+
+'''
 Overriding a DLL in the wineprefix.
-Note: not implemented
 '''
 my_wineprefix.override_dll(
     name="ucrtbase",
     type=2 # builtin/native
 )
+
+my_wineprefix.override_dll(
+    name="ucrtbase",
+    restore=True
 
 ```
