@@ -14,6 +14,8 @@ class WineProcess:
         the memory used by the process
     start: str
         the process start date/time
+    wineprefix: str
+        the full path of the wineprefix where the process is running
     '''
 
     pid = int
@@ -23,13 +25,13 @@ class WineProcess:
     start = str
     wineprefix = str
 
-    def __init__(self, pid: str, name: str, cpu: str, memory: str, start: str):
+    def __init__(self, pid: str, name: str, cpu: str, memory: str, start: str, wineprefix: str):
         self.pid = self._pid(pid)
         self.name = name
         self.cpu = self._cpu_usage(cpu)
         self.memory = self._memory_usage(memory)
         self.start = start
-        self.wineprefix = self._wineprefix()
+        self.wineprefix = wineprefix
 
     '''
     Data check and assignment
@@ -84,18 +86,6 @@ class WineProcess:
         '''
         # TODO: calculate memory percentage
         return int(memory)
-
-    def _wineprefix(self):
-        '''
-        Get the wineprefix where the process is running.
-
-        Return
-        ----------
-        str:
-            the wineprefix full path.
-        '''
-        # TODO: get wineprefix by process command
-        return
 
     '''
     Process management
