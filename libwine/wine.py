@@ -123,7 +123,7 @@ class Wine:
         '''
         Check if essential paths exist in winepath.
         '''
-        promise = ["lib64", "share", "bin", "lib", "include"]
+        promise = ["lib64", "share", "bin", "lib"]
 
         dirs = glob.glob(f"{self._winepath}/*")
         dirs = [d.replace(f"{self._winepath}/", "") for d in dirs]
