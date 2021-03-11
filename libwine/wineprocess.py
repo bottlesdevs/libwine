@@ -17,12 +17,6 @@ class WineProcess:
         the process name (command)
     parent_pid: str (optional)
         the parent process id
-    cpu: str (not implemented)
-        the cpu used by the process
-    memory: str (not implemented)
-        the memory used by the process
-    start: str (not implemented)
-        the process start date/time
     wine: Wine
         the Wine object
     '''
@@ -30,9 +24,6 @@ class WineProcess:
     pid = int
     name = str
     parent_pid = str
-    # cpu = int
-    # memory = int
-    # start = str
     wine = Wine
 
     _protected = [
@@ -50,9 +41,6 @@ class WineProcess:
         self.pid = self._pid(pid)
         self.name = name
         self.parent_pid = self._pid(parent_pid)
-        # self.cpu = self._cpu_usage(cpu)
-        # self.memory = self._memory_usage(memory)
-        # self.start = start
         self.wine = wine
 
     '''
