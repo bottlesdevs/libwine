@@ -325,7 +325,7 @@ class Wine:
             status = states[status]
             self.execute(command=f"wineboot {status}", envs=envs)
         else:
-            raise Exception(f"[{status}] is not a valid status for wineboot!")
+            raise ValueError(f"[{status}] is not a valid status for wineboot!")
 
     def kill(self):
         '''
