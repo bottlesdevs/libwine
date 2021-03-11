@@ -139,7 +139,7 @@ class Wine:
         Check if the given wine arch is compatible with the running system
         TODO: this method should check for ARM wine compatibility on ARM devices
         '''
-        pass
+        return
 
     def execute(self, command: str, comunicate: bool = False, envs: dict = {}, terminal: str = None):
         '''
