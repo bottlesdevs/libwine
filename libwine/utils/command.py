@@ -1,6 +1,5 @@
 import subprocess
 from os import path, mkdir, environ
-import os
 
 
 class Command:
@@ -28,7 +27,7 @@ class Command:
 
     def __init__(self, command: str, cwd: str = None, envs: dict = None):
         self._command = command
-        self._envs = os.environ.copy()
+        self._envs = environ.copy()
         self._envs["PATH"] = "/usr/sbin:/sbin:" + self._envs["PATH"]
 
         if cwd != None:
