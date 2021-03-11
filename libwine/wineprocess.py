@@ -1,5 +1,7 @@
 from typing import NewType
 
+from exceptions import ProtectedProcess
+
 Wine = NewType('Wine', object)
 
 
@@ -124,7 +126,7 @@ class WineProcess:
                 END_OF_INPUTS"
             self.wine.execute(command=command, comunicate=True)
         else:
-            raise Exception("Cannot kill protected process.")
+            raise ProtectedProcess(self.name)
 
     def update(self):
         '''
