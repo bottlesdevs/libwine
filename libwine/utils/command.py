@@ -1,5 +1,6 @@
 import subprocess
-from os import path, mkdir
+from os import path, mkdir, environ
+import os
 
 
 class Command:
@@ -27,17 +28,19 @@ class Command:
 
     def __init__(self, command: str, cwd: str = None, envs: dict = None):
         self._command = command
+        self._envs = os.environ.copy()
+        self._envs["PATH"] = "/usr/sbin:/sbin:" + self._envs["PATH"]
 
         if cwd != None:
             if not path.exists(cwd):
                 try:
                     mkdir(cwd)
                     self._cwd = cwd
-                except PermissionError: # the /tmp path will be used
+                except PermissionError:  # the /tmp path will be used
                     pass
 
-        if envs != None:
-            self._envs = envs
+        if envs is not None:
+            self._envs = {**self._envs, **envs}
 
     def execute(self, comunicate: bool = False):
         '''
@@ -64,17 +67,14 @@ class Command:
         '''
         command = self._command
 
-        if len(self._envs) > 0:
-            for e in self._envs:
-                command = f"{e}={self._envs[e]} {command}"
-                
+        command = command.split(" ")
         try:
             proc = subprocess.Popen(
                 command,
                 stdout=subprocess.PIPE,
                 stderr=subprocess.STDOUT,
                 cwd=self._cwd,
-                shell=True
+                env=self._envs
             )
         except FileNotFoundError:
             raise Exception("Command not found")
@@ -91,14 +91,3 @@ class Command:
         Execute the command and get the output
         '''
         return self.execute(comunicate=True)
-
-
-'''
-cmd = Command(
-    command="/home/mirko/.local/share/bottles/runners/chardonnay-6.0/bin/wine64 wineboot",
-    envs={
-        "WINEARCH":"win64",
-        "WINEPREFIX": "/home/mirko/test"
-    })
-print(cmd.comunicate())
-'''

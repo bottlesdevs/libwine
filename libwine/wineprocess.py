@@ -61,7 +61,7 @@ class WineProcess:
         str:
             a valid process ID as hex
         '''
-        if pid != None:
+        if pid is not None:
             return f"0x{pid}"
 
     def _cpu_usage(self, cpu: str):
