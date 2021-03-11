@@ -1,4 +1,4 @@
-from .wine import Wine
+from wine import Wine
 
 
 class Proton(Wine):
@@ -7,8 +7,8 @@ class Proton(Wine):
 
     Parameters
     ----------
-    winepath : str
-        full path to Wine
+    protonpath : str
+        full path to Proton
     wineprefix: str
         full path to your wineprefix
     verbose: int, optional
@@ -26,13 +26,15 @@ class Proton(Wine):
 
     _winepath = str
     _wineprefix = str
+    _verbose = int
 
-    def __init__(self, winepath: str, wineprefix: str, verbose: int = 0):
-        self._winepath = f"{winepath}/dist"
+    def __init__(self, protonpath: str, wineprefix: str, verbose: int = 0):
+        self._winepath = f"{protonpath}/dist"
         self._wineprefix = wineprefix
 
         if verbose in self._verbose_levels:
             self._verbose = verbose
 
         if not self.validate_winepath():
-            raise ValueError("Given winepath doesn't seem a valid Wine path.")
+            raise ValueError(
+                "Given protonpath doesn't seem a valid Proton path.")
