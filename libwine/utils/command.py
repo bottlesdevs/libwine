@@ -30,7 +30,7 @@ class Command:
         self._envs = environ.copy()
         self._envs["PATH"] = "/usr/sbin:/sbin:" + self._envs["PATH"]
 
-        if cwd != None:
+        if cwd is not None:
             if not path.exists(cwd):
                 try:
                     mkdir(cwd)
