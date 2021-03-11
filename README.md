@@ -118,4 +118,15 @@ my_wineprefix.override_dll(
     name="ucrtbase",
     restore=True
 )
+
+'''
+List running processes inside the wineprefix.
+'''
+my_wineprefix.processes()
+
+'''
+Kill a process
+'''
+process = my_wineprefix.processes()[0]
+process.kill()
 ```
