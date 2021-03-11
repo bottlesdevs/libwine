@@ -1,6 +1,8 @@
 # libwine
 A python library for interacting with Wine.
 
+[![CodeFactor](https://www.codefactor.io/repository/github/bottlesdevs/libwine/badge)](https://www.codefactor.io/repository/github/bottlesdevs/libwine)
+
 ## Usage
 ```python
 from libwine.wine import Wine
