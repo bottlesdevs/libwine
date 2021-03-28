@@ -1,4 +1,4 @@
-from wine import Wine
+from .wine import Wine
 
 
 class Proton(Wine):

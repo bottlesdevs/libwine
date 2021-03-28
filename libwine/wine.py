@@ -1,8 +1,8 @@
 import glob
 import re
 
-from utils.command import Command
-from wineprocess import WineProcess
+from .utils.command import Command
+from .wineprocess import WineProcess
 
 
 class Wine:

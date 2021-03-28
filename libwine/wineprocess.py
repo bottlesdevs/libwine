@@ -1,6 +1,6 @@
 from typing import NewType
 
-from exceptions import ProtectedProcess
+from .exceptions import ProtectedProcess
 
 Wine = NewType('Wine', object)
 
