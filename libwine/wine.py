@@ -112,14 +112,14 @@ class Wine:
         if verbose in self._verbose_levels:
             self._verbose = verbose
 
-        if not self.validate_winepath():
+        if not self.__validate_winepath():
             raise ValueError("Given winepath doesn't seem a valid Wine path.")
 
     '''
     Wine checks
     '''
 
-    def validate_winepath(self):
+    def __validate_winepath(self):
         '''
         Check if essential paths exist in winepath.
         '''
