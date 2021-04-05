@@ -409,6 +409,33 @@ class Wine:
     Wine register management
     '''
 
+    def reg_list(self, key: str):
+        '''
+        List all keys values from the wineprefix register.
+
+        Parameters
+        ----------
+        key : str
+            the key name
+
+        Return
+        ------
+        list:
+            A list of key values.
+        '''
+        values = []
+        command = f'reg query "{key}" /f'
+        output = self.execute(
+            command=command,
+            comunicate=True).split("\n")
+
+        for o in output:
+            if o.startswith("    "):
+                o = re.sub(' +', '|', o[4:].replace("\r", ""))
+                values.append(o.split("|"))
+
+        return values
+
     def reg_add(self, key: str, value: str, data: str):
         '''
         Add (or edit) key to the wineprefix register.
@@ -422,7 +449,7 @@ class Wine:
         data : str
             the data to store in the key value
         '''
-        command = f"reg add '{key}' /v '{value}' /d '{data}' /f"
+        command = f'reg add "{key}" /v "{value}" /d "{data}" /f'
         self.execute(command=command)
 
     def reg_delete(self, key: str, value: str):
@@ -436,7 +463,7 @@ class Wine:
         value : str
             the key value to be removed
         '''
-        command = f"reg delete '{key}' /v '{value}' /f"
+        command = f'reg delete "{key}" /v "{value}" /f'
         self.execute(command=command)
 
     '''
