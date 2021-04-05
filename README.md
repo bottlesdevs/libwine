@@ -79,6 +79,11 @@ my_wineprefix.run_msi("ath/to/file.msi")
 my_wineprefix.run_bat("ath/to/file.bat")
 
 '''
+List all keys values from the wineprefix register.
+'''
+my_wineprefix.reg_list("HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops")
+
+'''
 Add (or erdit) key to the wineprefix register.
 '''
 my_wineprefix.reg_add(
