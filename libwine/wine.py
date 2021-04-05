@@ -593,6 +593,26 @@ class Wine:
             data=status
         )
 
+    def set_fullscreen_mouse_capture(self, status: bool):
+        '''
+        Enable or disable auto mouse capture in fullscreen
+
+        Parameters
+        ----------
+        status : bool
+            the capture status
+        '''
+        if status:
+            status = "Y"
+        else:
+            status = "N"
+
+        self.reg_add(
+            key="HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+            value="GrabbFullscreen",
+            data=status
+        )
+
     '''
     Wine DLL overrides management
     '''
