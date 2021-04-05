@@ -473,7 +473,6 @@ class Wine:
         data_type = self._reg_types.get(data_type)
 
         command = f'reg add "{key}" /v "{value}" /d "{data}" /t "{data_type}" /f'
-        print(command)
         self.execute(command=command)
 
     def reg_delete(self, key: str, value: str):
