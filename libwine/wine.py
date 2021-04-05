@@ -105,6 +105,15 @@ class Wine:
         3: "native,builtin"
     }
 
+    _reg_types = {
+        0: "REG_SZ",
+        1: "REG_DWORD",
+        2: "REG_MULTI_SZ",
+        3: "REG_BINARY",
+        4: "REG_EXPAND_SZ",
+        5: "REG_NONE",
+    }
+
     def __init__(self, winepath: str, wineprefix: str, verbose: int = 0):
         self._winepath = winepath
         self._wineprefix = wineprefix
@@ -436,7 +445,7 @@ class Wine:
 
         return values
 
-    def reg_add(self, key: str, value: str, data: str):
+    def reg_add(self, key: str, value: str, data: str, data_type: int = 0):
         '''
         Add (or edit) key to the wineprefix register.
 
@@ -448,8 +457,23 @@ class Wine:
             the key value
         data : str
             the data to store in the key value
+        data_type : int
+            the type of data (default 0:REG_SZ):
+            0 (REG_SZ): standard string
+            1 (REG_DWORD): data by a four byte number
+            2 (REG_MULTI_SZ): multiple string
+            3 (REG_BINARY): data as raw binary data
+            4 (REG_EXPAND_SZ): expandable data string
+            5 (REG_NONE): no defined value type
         '''
-        command = f'reg add "{key}" /v "{value}" /d "{data}" /f'
+
+        if data_type not in self._reg_types:
+            raise ValueError("Given key type is not supported.")
+
+        data_type = self._reg_types.get(data_type)
+
+        command = f'reg add "{key}" /v "{value}" /d "{data}" /t "{data_type}" /f'
+        print(command)
         self.execute(command=command)
 
     def reg_delete(self, key: str, value: str):
