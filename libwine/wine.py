@@ -495,7 +495,7 @@ class Wine:
 
     def set_windows(self, version: str):
         '''
-        Change Windows version of the wineprefix
+        Change Windows version of the wineprefix.
 
         Parameters
         ----------
@@ -550,7 +550,7 @@ class Wine:
 
     def set_virtual_desktop(self, status: bool, res: str = None):
         '''
-        Enable or disable the Wine Virtual Desktop
+        Enable or disable the Wine Virtual Desktop.
 
         Parameters
         ----------
@@ -578,7 +578,7 @@ class Wine:
 
     def set_decorations(self, status: bool):
         '''
-        Enable or disable the windows manager decorations
+        Enable or disable the windows manager decorations.
 
         Parameters
         ----------
@@ -598,7 +598,7 @@ class Wine:
 
     def set_window_managed(self, status: bool):
         '''
-        Enable or disable the windows manager control
+        Enable or disable the windows manager control.
 
         Parameters
         ----------
@@ -618,7 +618,7 @@ class Wine:
 
     def set_fullscreen_mouse_capture(self, status: bool):
         '''
-        Enable or disable auto mouse capture in fullscreen
+        Enable or disable auto mouse capture in fullscreen.
 
         Parameters
         ----------
@@ -634,6 +634,22 @@ class Wine:
             key="HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
             value="GrabbFullscreen",
             data=status
+        )
+
+    def set_dpi(self, dpi: int):
+        '''
+        Set custom DPI value.
+
+        Parameters
+        ----------
+        dpi : int
+            the new density value
+        '''
+        self.reg_add(
+            key="HKEY_CURRENT_USER\\Control Panel\\Desktop",
+            value="LogPixels",
+            data=dpi,
+            data_type=1
         )
 
     '''
