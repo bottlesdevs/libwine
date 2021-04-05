@@ -567,7 +567,8 @@ class Wine:
             A list of dll overrides.
         '''
         overrides = []
-        values = self.reg_list("HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides")
+        values = self.reg_list(
+            "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides")
         for v in values:
             override = [v[0]]
             if v[2] == "native,builtin":
@@ -578,9 +579,9 @@ class Wine:
                 override.append(1)
             elif v[2] == "builtin":
                 override.append(0)
-            
+
             overrides.append(override)
-        
+
         return overrides
 
     def override_dll(self, name: str, override: int = 0, restore: bool = False):
