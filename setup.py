@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='libwine',
-    version='0.3',
+    version='0.4',
     license='GPL-3.0',
     description='A python library for interacting with Wine.',
     keywords='libwine wine proton windows',
