@@ -69,7 +69,7 @@ my_wineprefix.regedit()
 '''
 Execute custom wine commands inside the wineprefix.
 '''
-my_wineprefix.command("DIR)
+my_wineprefix.command("DIR")
 
 '''
 Execute exe/msi/bat files inside the wineprefix.
