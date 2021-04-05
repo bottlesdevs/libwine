@@ -128,6 +128,11 @@ my_wineprefix.override_dll(
 )
 
 '''
+List all DLL overrides in the wineprefix
+'''
+my_wineprefix.override_dll_list()
+
+'''
 List running processes inside the wineprefix.
 '''
 my_wineprefix.processes()
