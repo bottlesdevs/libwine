@@ -553,6 +553,26 @@ class Wine:
                 value="Desktop"
             )
 
+    def set_decorations(self, status: bool):
+        '''
+        Enable or disable the windows manager decorations
+
+        Parameters
+        ----------
+        status : bool
+            the Virtual Desktop status
+        '''
+        if status:
+            status = "Y"
+        else:
+            status = "N"
+
+        self.reg_add(
+            key="HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+            value="Decorated",
+            data=status
+        )
+
     '''
     Wine DLL overrides management
     '''
