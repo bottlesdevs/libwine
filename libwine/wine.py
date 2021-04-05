@@ -560,7 +560,7 @@ class Wine:
         Parameters
         ----------
         status : bool
-            the Virtual Desktop status
+            the decorations status
         '''
         if status:
             status = "Y"
@@ -570,6 +570,26 @@ class Wine:
         self.reg_add(
             key="HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
             value="Decorated",
+            data=status
+        )
+
+    def set_window_managed(self, status: bool):
+        '''
+        Enable or disable the windows manager control
+
+        Parameters
+        ----------
+        status : bool
+            the control status
+        '''
+        if status:
+            status = "Y"
+        else:
+            status = "N"
+
+        self.reg_add(
+            key="HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+            value="Managed",
             data=status
         )
 
