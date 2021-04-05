@@ -101,18 +101,38 @@ my_wineprefix.reg_delete(
 )
 
 '''
-Change Windows version
+Change Windows version.
 '''
 my_wineprefix.set_windows("win10")
 
 '''
-Manage Virtual Desktop
+Manage Virtual Desktop.
 '''
 my_wineprefix.set_virtual_desktop(
     status=True,
     res="800x600"
 )
 my_wineprefix.set_virtual_desktop(status=False)
+
+'''
+Enable or disable the windows manager decorations.
+'''
+my_wineprefix.set_decorations(True)
+
+'''
+Enable or disable the windows manager control.
+'''
+my_wineprefix.set_window_managed(True)
+
+'''
+Enable or disable auto mouse capture in fullscreen.
+'''
+my_wineprefix.set_fullscreen_mouse_capture(True)
+
+'''
+Set custom DPI value.
+'''
+my_wineprefix.set_dpi(120)
 
 '''
 Overriding a DLL in the wineprefix.
