@@ -184,6 +184,15 @@ class Wine:
         return cmd.execute()
 
     '''
+    Setters
+    '''
+    def set_verbose(self, level: int):
+        if level not in self._verbose_levels:
+            raise ValueError(f"{level} is not a valid verbose level.")
+        else:
+            self._verbose = self._verbose_levels[level]
+    
+    '''
     Wine Tools
     '''
 
