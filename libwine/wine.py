@@ -186,12 +186,13 @@ class Wine:
     '''
     Setters
     '''
+
     def set_verbose(self, level: int):
         if level not in self._verbose_levels:
             raise ValueError(f"{level} is not a valid verbose level.")
         else:
             self._verbose = self._verbose_levels[level]
-    
+
     '''
     Wine Tools
     '''
@@ -481,7 +482,7 @@ class Wine:
 
         data_type = self._reg_types.get(data_type)
 
-        command = f'reg add "{key}" /v "{value}" /d "{data}" /t "{data_type}" /f'
+        command = f'reg add {key} /v {value} /d {data} /t {data_type} /f'
         self.execute(command=command)
 
     def reg_delete(self, key: str, value: str):
@@ -555,6 +556,39 @@ class Wine:
             key="HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion",
             value="CurrentVersion",
             data=self._windows_versions.get(version)["CurrentVersion"]
+        )
+
+    def set_app_default(self, executable: str, version: str):
+        '''
+        Change default Windows version per application
+
+        Parameters
+        ----------
+        executable : str
+            a valid executable name (e.g. wmplayer.exe)
+        version : str
+            the Windows version to be setted:
+            win10 (Microsoft Windows 10)
+            win81 (Microsoft Windows 8.1)
+            win8 (Microsoft Windows 8)
+            win7 (Microsoft Windows 7)
+            win2008r2 (Microsoft Windows 2008 R1)
+            win2008 (Microsoft Windows 2008)
+            winxp (Microsoft Windows XP)
+
+        Raises
+        ------
+        ValueError
+            If the given version is invalid.
+        '''
+
+        if version not in self._windows_versions:
+            raise ValueError("Given version is not supported.")
+            
+        self.reg_add(
+            key=f"HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\{executable}",
+            value="Version",
+            data=version
         )
 
     def set_virtual_desktop(self, status: bool, res: str = None):
@@ -655,7 +689,7 @@ class Wine:
             the new density value
         '''
         self.reg_add(
-            key="HKEY_CURRENT_USER\\Control Panel\\Desktop",
+            key="HKEY_CURRENT_USER\\Control#Panel\\Desktop",
             value="LogPixels",
             data=dpi,
             data_type=1
