@@ -9,7 +9,7 @@ class Command:
     Parameters
     ----------
     command : str
-        the command to be executed
+        the command to be executed (use # for spaces to be kept)
     cwd: str, optional
         full path to the working directory
     envs: dict, optional
@@ -65,8 +65,9 @@ class Command:
             if command not found
         '''
         command = self._command
-
         command = command.split(" ")
+        command = [c.replace('#',' ') for c in command]
+        
         try:
             proc = subprocess.Popen(
                 command,
@@ -79,7 +80,7 @@ class Command:
             raise Exception("Command not found")
         except OSError:
             return False
-
+        print(proc.communicate()[0].decode("utf-8"))
         if comunicate:
             return proc.communicate()[0].decode("utf-8")
 
