@@ -5,7 +5,7 @@ w = Wine(
     wineprefix="/home/mirko/.local/share/bottles/bottles"
 )
 w.set_app_default(
-    executable="wmplayerexe",
+    executable="wmplayer.exe",
     version="win7"
 )
 w.winecfg()
