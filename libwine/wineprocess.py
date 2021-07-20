@@ -32,7 +32,7 @@ class WineProcess:
         "rpcss.exe",
         "svchost.exe",
         "winedevice.exe",
-        "plugplay.exe"
+        "plugplay.exe",
         "winedbg.exe",
         "conhost.exe"
     ]

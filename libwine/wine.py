@@ -190,8 +190,7 @@ class Wine:
     def set_verbose(self, level: int):
         if level not in self._verbose_levels:
             raise ValueError(f"{level} is not a valid verbose level.")
-        else:
-            self._verbose = self._verbose_levels[level]
+        self._verbose = self._verbose_levels[level]
 
     '''
     Wine Tools
@@ -258,7 +257,7 @@ class Wine:
         self.execute(command="regedit")
 
     '''
-    Wine commandd execution
+    Wine command execution
     '''
 
     def command(self, command: str):
