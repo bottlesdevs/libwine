@@ -150,7 +150,7 @@ class Wine:
         '''
         return
 
-    def execute(self, command: str, comunicate: bool = False, envs: dict = {}, terminal: str = None):
+    def execute(self, command: str, comunicate: bool = False, envs: dict = {}, terminal: str = None, cwd: str = None):
         '''
         Execute command inside wineprefix using the wine in winepath
 
@@ -171,10 +171,13 @@ class Wine:
 
         if terminal in self._terminals:
             command = self._terminals[terminal] % command
+        
+        if cwd is None:
+            cwd=self._wineprefix
 
         cmd = Command(
             command=command,
-            cwd=self._wineprefix,
+            cwd=cwd,
             envs=envs
         )
 
