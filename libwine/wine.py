@@ -247,11 +247,14 @@ class Wine:
         '''
         self.execute(command="control")
 
-    def uninstaller(self):
+    def uninstaller(self, uuid: str = None):
         '''
         Launch the uninstaller tool on the active display.
         '''
-        self.execute(command="uninstaller")
+        command = "uninstaller"
+        if uuid is not None:
+            command = f"uninstaller --remove '{uuid}'"
+        self.execute(command)
 
     def regedit(self):
         '''
