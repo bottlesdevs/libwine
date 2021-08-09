@@ -205,7 +205,7 @@ class Wine:
         '''
         self.execute(command="winecfg")
 
-    def debug(self, terminal: str = None):
+    def debug(self, terminal: str = None, wineconsole: bool = False):
         '''
         Launch the winedbg tool.
 
@@ -215,12 +215,15 @@ class Wine:
             command to an external terminal (default is None)
         '''
 
-        self.execute(
-            command="winedbg",
-            terminal=terminal
-        )
+        if wineconsole:
+            self.execute(command="wineconsole winedbg")
+        else:
+            self.execute(
+                command="winedbg",
+                terminal=terminal
+            )
 
-    def cmd(self, terminal: str = None):
+    def cmd(self, terminal: str = None, wineconsole: bool = False):
         '''
         Launch the cmd tool.
 
@@ -230,10 +233,13 @@ class Wine:
             command to an external terminal (default is None)
         '''
 
-        self.execute(
-            command="cmd",
-            terminal=terminal
-        )
+        if wineconsole:
+            self.execute(command="wineconsole cmd")
+        else:
+            self.execute(
+                command="cmd",
+                terminal=terminal
+            )
 
     def taskmanager(self):
         '''
