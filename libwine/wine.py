@@ -164,6 +164,8 @@ class Wine:
             dict of environment variables to pass on the execution
         terminal : str, optional
             command to an external terminal (default is None)
+        cwd: str, optional
+            full path to the working directory
         '''
         envs["WINEPREFIX"] = self._wineprefix
         envs["WINEDEBUG"] = self._verbose_levels[self._verbose]
@@ -283,38 +285,44 @@ class Wine:
         '''
         self.execute(command=command)
 
-    def run_exe(self, executable_path: str, envs: dict = {}):
+    def run_exe(self, executable_path: str, envs: dict = {}, cwd: str = None):
         '''
         Execute exe files inside the wineprefix.
         executable_path : str
             full path to the .exe file
         envs: dict, optional
             dict of environment variables to pass on the execution
+        cwd: str, optional
+            full path to the working directory
         '''
         command = executable_path
-        self.execute(command=command, envs=envs)
+        self.execute(command=command, envs=envs, cwd=cwd)
 
-    def run_msi(self, msi_path: str, envs: dict = {}):
+    def run_msi(self, msi_path: str, envs: dict = {}, cwd: str = None):
         '''
         Execute msi files inside the wineprefix.
         msi_path : str
             full path to the .msi file
         envs: dict, optional
             dict of environment variables to pass on the execution
+        cwd: str, optional
+            full path to the working directory
         '''
         command = f"msiexec /i {msi_path}"
-        self.execute(command=command, envs=envs)
+        self.execute(command=command, envs=envs, cwd=cwd)
 
-    def run_bat(self, bat_path: str, envs: dict = {}):
+    def run_bat(self, bat_path: str, envs: dict = {}, cwd: str = None):
         '''
         Execute bat files inside the wineprefix.
         bat_path : str
             full path to the .bat file
         envs: dict, optional
             dict of environment variables to pass on the execution
+        cwd: str, optional
+            full path to the working directory
         '''
         command = f"wineconsole cmd /c '{bat_path}'"
-        self.execute(command=command, envs=envs)
+        self.execute(command=command, envs=envs, cwd=cwd)
 
     '''
     Wine uptime management
